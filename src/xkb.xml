@@ -430,45 +430,48 @@ authorization from the authors.
 
 	<!-- Key Behaviors -->
 
-	<struct name="CommonBehavior">
-		<field name="type" type="CARD8" />
-		<field name="data" type="CARD8" />
+	<struct name="Behavior">
+		<field name="type" type="CARD8" enum="BehaviorType" />
+		<switch name="action">
+			<fieldref>type</fieldref>
+			<case name="default">
+				<enumref ref="BehaviorType">Default</enumref>
+				<pad bytes="1" />
+			</case>
+			<case name="lock">
+				<enumref ref="BehaviorType">Lock</enumref>
+				<pad bytes="1" />
+			</case>
+			<case name="permanentLock">
+				<enumref ref="BehaviorType">PermanentLock</enumref>
+				<pad bytes="1" />
+			</case>
+			<case name="radioGroup">
+				<enumref ref="BehaviorType">RadioGroup</enumref>
+				<field name="group" type="CARD8" />
+			</case>
+			<case name="permanentRadioGroup">
+				<enumref ref="BehaviorType">PermanentRadioGroup</enumref>
+				<field name="group" type="CARD8" />
+			</case>
+			<case name="overlay1">
+				<enumref ref="BehaviorType">Overlay1</enumref>
+				<field name="key" type="KEYCODE" />
+			</case>
+			<case name="overlay2">
+				<enumref ref="BehaviorType">Overlay2</enumref>
+				<field name="key" type="KEYCODE" />
+			</case>
+			<case name="permanentOverlay1">
+				<enumref ref="BehaviorType">PermanentOverlay1</enumref>
+				<field name="key" type="KEYCODE" />
+			</case>
+			<case name="permanentOverlay2">
+				<enumref ref="BehaviorType">PermanentOverlay2</enumref>
+				<field name="key" type="KEYCODE" />
+			</case>
+		</switch>
 	</struct>
-
-	<struct name="DefaultBehavior">
-		<field name="type" type="CARD8" />
-		<pad bytes="1" />
-	</struct>
-
-	<typedef oldname="DefaultBehavior" newname="LockBehavior" />
-
-	<struct name="RadioGroupBehavior">
-		<field name="type" type="CARD8" />
-		<field name="group" type="CARD8" />
-	</struct>
-
-	<struct name="OverlayBehavior">
-		<field name="type" type="CARD8" />
-		<field name="key" type="KEYCODE" />
-	</struct>
-
-	<typedef oldname="LockBehavior" newname="PermamentLockBehavior" />
-	<typedef oldname="RadioGroupBehavior" newname="PermamentRadioGroupBehavior" />
-	<typedef oldname="OverlayBehavior" newname="PermamentOverlayBehavior" />
-
-	<union name="Behavior">
-		<field name="common" type="CommonBehavior" />
-		<field name="default" type="DefaultBehavior" />
-		<field name="lock" type="LockBehavior" />
-		<field name="radioGroup" type="RadioGroupBehavior" />
-		<field name="overlay1" type="OverlayBehavior" />
-		<field name="overlay2" type="OverlayBehavior" />
-		<field name="permamentLock" type="PermamentLockBehavior" />
-		<field name="permamentRadioGroup" type="PermamentRadioGroupBehavior" />
-		<field name="permamentOverlay1" type="PermamentOverlayBehavior" />
-		<field name="permamentOverlay2" type="PermamentOverlayBehavior" />
-		<field name="type" type="CARD8" />
-	</union>
 
 	<enum name="BehaviorType">
 		<item name="Default">             <value>0</value> </item>	<!--0x00-->
@@ -476,10 +479,10 @@ authorization from the authors.
 		<item name="RadioGroup">          <value>2</value> </item>	<!--0x02-->
 		<item name="Overlay1">            <value>3</value> </item>	<!--0x03-->
 		<item name="Overlay2">            <value>4</value> </item>	<!--0x04-->
-		<item name="PermamentLock">       <value>129</value> </item>	<!--0x81-->
-		<item name="PermamentRadioGroup"> <value>130</value> </item>	<!--0x82-->
-		<item name="PermamentOverlay1">   <value>131</value> </item>	<!--0x83-->
-		<item name="PermamentOverlay2">   <value>132</value> </item>	<!--0x84-->
+		<item name="PermanentLock">       <value>129</value> </item>	<!--0x81-->
+		<item name="PermanentRadioGroup"> <value>130</value> </item>	<!--0x82-->
+		<item name="PermanentOverlay1">   <value>131</value> </item>	<!--0x83-->
+		<item name="PermanentOverlay2">   <value>132</value> </item>	<!--0x84-->
 	</enum>
 
 	<struct name="SetBehavior">
@@ -799,13 +802,7 @@ authorization from the authors.
 		<item name="DeviceValuator"> <value>20</value> </item>
 	</enum>
 
-	<struct name="SANoAction">
-		<field name="type" type="CARD8" enum="SAType" />
-		<pad bytes="7" />
-	</struct>
-
 	<struct name="SASetMods">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="SA" />
 		<field name="mask" type="CARD8" mask="ModMask" />
 		<field name="realMods" type="CARD8" mask="ModMask" />
@@ -819,7 +816,6 @@ authorization from the authors.
 	<typedef oldname="SASetMods" newname="SALockMods" />
 
 	<struct name="SASetGroup">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="SA" />
 		<field name="group" type="INT8" />
 		<pad bytes="5" />
@@ -836,7 +832,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SAMovePtr">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="SAMovePtrFlag" />
 		<field name="xHigh" type="INT8" />
 		<field name="xLow" type="CARD8" />
@@ -846,7 +841,6 @@ authorization from the authors.
 	</struct>
 
 	<struct name="SAPtrBtn">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" />
 		<field name="count" type="CARD8" />
 		<field name="button" type="CARD8" />
@@ -854,7 +848,6 @@ authorization from the authors.
 	</struct>
 
 	<struct name="SALockPtrBtn">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" />
 		<pad bytes="1" />
 		<field name="button" type="CARD8" />
@@ -868,7 +861,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SASetPtrDflt">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="SASetPtrDfltFlag" />
 		<field name="affect" type="CARD8" mask="SASetPtrDfltFlag" />
 		<field name="value" type="INT8" />
@@ -891,7 +883,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SAIsoLock">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="SAIsoLockFlag" />
 		<field name="mask" type="CARD8" mask="ModMask" />
 		<field name="realMods" type="CARD8" mask="ModMask" />
@@ -901,18 +892,12 @@ authorization from the authors.
 		<field name="vmodsLow" type="CARD8" mask="VModsLow" />
 	</struct>
 
-	<struct name="SATerminate">
-		<field name="type" type="CARD8" enum="SAType" />
-		<pad bytes="7" />
-	</struct>
-
 	<enum name="SwitchScreenFlag">
 		<item name="Application"> <bit>0</bit> </item>
 		<item name="Absolute" >   <bit>2</bit> </item>
 	</enum>
 
 	<struct name="SASwitchScreen">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" />
 		<field name="newScreen" type="INT8" />
 		<pad bytes="5" />
@@ -938,7 +923,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SASetControls">
-		<field name="type" type="CARD8" enum="SAType" />
 		<pad bytes="3" />
 		<field name="boolCtrlsHigh" type="CARD8" mask="BoolCtrlsHigh" />
 		<field name="boolCtrlsLow"  type="CARD8" mask="BoolCtrlsLow" />
@@ -954,7 +938,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SAActionMessage">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="ActionMessageFlag" />
 		<list name="message" type="CARD8">
 			<value>6</value>
@@ -962,7 +945,6 @@ authorization from the authors.
 	</struct>
 
 	<struct name="SARedirectKey">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="newkey" type="KEYCODE" />
 		<field name="mask" type="CARD8" mask="ModMask" />
 		<field name="realModifiers" type="CARD8" mask="ModMask" />
@@ -973,7 +955,6 @@ authorization from the authors.
 	</struct>
 
 	<struct name="SADeviceBtn">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" />
 		<field name="count" type="CARD8" />
 		<field name="button" type="CARD8" />
@@ -987,7 +968,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SALockDeviceBtn">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="flags" type="CARD8" mask="LockDeviceFlags" />
 		<pad bytes="1" />
 		<field name="button" type="CARD8" />
@@ -1005,7 +985,6 @@ authorization from the authors.
 	</enum>
 
 	<struct name="SADeviceValuator">
-		<field name="type" type="CARD8" enum="SAType" />
 		<field name="device" type="CARD8" />
 		<field name="val1what" type="CARD8" enum="SAValWhat" />
 		<field name="val1index" type="CARD8" />
@@ -1032,30 +1011,96 @@ authorization from the authors.
 		<field name="action" type="SIAction" />
 	</struct>
 
-	<union name="Action">
-		<field name="noaction" type="SANoAction" />
-		<field name="setmods" type="SASetMods" />
-		<field name="latchmods" type="SALatchMods" />
-		<field name="lockmods" type="SALockMods" />
-		<field name="setgroup" type="SASetGroup" />
-		<field name="latchgroup" type="SALatchGroup" />
-		<field name="lockgroup" type="SALockGroup" />
-		<field name="moveptr" type="SAMovePtr" />
-		<field name="ptrbtn" type="SAPtrBtn" />
-		<field name="lockptrbtn" type="SALockPtrBtn" />
-		<field name="setptrdflt" type="SASetPtrDflt" />
-		<field name="isolock" type="SAIsoLock" />
-		<field name="terminate" type="SATerminate" />
-		<field name="switchscreen" type="SASwitchScreen" />
-		<field name="setcontrols" type="SASetControls" />
-		<field name="lockcontrols" type="SALockControls" />
-		<field name="message" type="SAActionMessage" />
-		<field name="redirect" type="SARedirectKey" />
-		<field name="devbtn" type="SADeviceBtn" />
-		<field name="lockdevbtn" type="SALockDeviceBtn" />
-		<field name="devval" type="SADeviceValuator" />
+	<struct name="Action">
 		<field name="type" type="CARD8" enum="SAType" />
-	</union>
+		<switch name="action">
+			<fieldref>type</fieldref>
+			<case name="noaction">
+				<enumref ref="SAType">NoAction</enumref>
+				<pad bytes="7" />
+			</case>
+			<case name="setmods">
+				<enumref ref="SAType">SetMods</enumref>
+				<field name="setmods" type="SASetMods" />
+			</case>
+			<case name="latchmods">
+				<enumref ref="SAType">LatchMods</enumref>
+				<field name="latchmods" type="SALatchMods" />
+			</case>
+			<case name="lockmods">
+				<enumref ref="SAType">LockMods</enumref>
+				<field name="lockmods" type="SALockMods" />
+			</case>
+			<case name="setgroup">
+				<enumref ref="SAType">SetGroup</enumref>
+				<field name="setgroup" type="SASetGroup" />
+			</case>
+			<case name="latchgroup">
+				<enumref ref="SAType">LatchGroup</enumref>
+				<field name="latchgroup" type="SALatchGroup" />
+			</case>
+			<case name="lockgroup">
+				<enumref ref="SAType">LockGroup</enumref>
+				<field name="lockgroup" type="SALockGroup" />
+			</case>
+			<case name="moveptr">
+				<enumref ref="SAType">MovePtr</enumref>
+				<field name="moveptr" type="SAMovePtr" />
+			</case>
+			<case name="ptrbtn">
+				<enumref ref="SAType">PtrBtn</enumref>
+				<field name="ptrbtn" type="SAPtrBtn" />
+			</case>
+			<case name="lockptrbtn">
+				<enumref ref="SAType">LockPtrBtn</enumref>
+				<field name="lockptrbtn" type="SALockPtrBtn" />
+			</case>
+			<case name="setptrdflt">
+				<enumref ref="SAType">SetPtrDflt</enumref>
+				<field name="setptrdflt" type="SASetPtrDflt" />
+			</case>
+			<case name="isolock">
+				<enumref ref="SAType">ISOLock</enumref>
+				<field name="isolock" type="SAIsoLock" />
+			</case>
+			<case name="terminate">
+				<enumref ref="SAType">Terminate</enumref>
+				<pad bytes="7" />
+			</case>
+			<case name="switchscreen">
+				<enumref ref="SAType">SwitchScreen</enumref>
+				<field name="switchscreen" type="SASwitchScreen" />
+			</case>
+			<case name="setcontrols">
+				<enumref ref="SAType">SetControls</enumref>
+				<field name="switchscreen" type="SASetControls" />
+			</case>
+			<case name="lockcontrols">
+				<enumref ref="SAType">LockControls</enumref>
+				<field name="lockscreen" type="SALockControls" />
+			</case>
+			<case name="message">
+				<enumref ref="SAType">ActionMessage</enumref>
+				<field name="message" type="SAActionMessage" />
+			</case>
+			<case name="redirect">
+				<enumref ref="SAType">RedirectKey</enumref>
+				<field name="redirect" type="SARedirectKey" />
+			</case>
+			<case name="devbtn">
+				<enumref ref="SAType">DeviceBtn</enumref>
+				<field name="devbtn" type="SADeviceBtn" />
+			</case>
+			<case name="lockdevbtn">
+				<enumref ref="SAType">LockDeviceBtn</enumref>
+				<field name="lockdevbtn" type="SALockDeviceBtn" />
+			</case>
+			<case name="devval">
+				<enumref ref="SAType">DeviceValuator</enumref>
+				<field name="devval" type="SADeviceValuator" />
+			</case>
+		</switch>
+	</struct>
 
 	<!-- Requests -->
 

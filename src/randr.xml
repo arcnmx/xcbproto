@@ -984,18 +984,38 @@ authorization from the authors.
 		<pad bytes="15" />
 	</struct>
 
-	<union name="NotifyData">
-		<field type="CrtcChange"       name="cc" />
-		<field type="OutputChange"     name="oc" />
-		<field type="OutputProperty"   name="op" />
-		<field type="ProviderChange"   name="pc" />
-		<field type="ProviderProperty" name="pp" />
-		<field type="ResourceChange"   name="rc" />
-		<field type="LeaseNotify"      name="lc" />
-	</union>
-
 	<event name="Notify" number="1">
 		<field type="CARD8" name="subCode" enum="Notify" />
-		<field type="NotifyData" name="u" />
+		<switch name="u">
+			<fieldref>subCode</fieldref>
+			<case name="cc">
+				<enumref ref="Notify">CrtcChange</enumref>
+				<field type="CrtcChange"       name="cc" />
+			</case>
+			<case name="oc">
+				<enumref ref="Notify">OutputChange</enumref>
+				<field type="OutputChange"     name="oc" />
+			</case>
+			<case name="op">
+				<enumref ref="Notify">OutputProperty</enumref>
+				<field type="OutputProperty"   name="op" />
+			</case>
+			<case name="pc">
+				<enumref ref="Notify">ProviderChange</enumref>
+				<field type="ProviderChange"   name="pc" />
+			</case>
+			<case name="pp">
+				<enumref ref="Notify">ProviderProperty</enumref>
+				<field type="ProviderProperty" name="pp" />
+			</case>
+			<case name="rc">
+				<enumref ref="Notify">ResourceChange</enumref>
+				<field type="ResourceChange"   name="rc" />
+			</case>
+			<case name="lc">
+				<enumref ref="Notify">Lease</enumref>
+				<field type="LeaseNotify"      name="lc" />
+			</case>
+		</switch>
 	</event>
 </xcb>
