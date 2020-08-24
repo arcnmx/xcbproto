@@ -1026,19 +1026,31 @@ Indicates whether the colormap was changed (1) or installed/uninstalled (0).
     </doc>
   </event>
 
-  <union name="ClientMessageData">
-    <!-- The format member of the ClientMessage event determines which array
-         to use. -->
-    <list type="CARD8"  name="data8" ><value>20</value></list> <!--  8 -->
-    <list type="CARD16" name="data16"><value>10</value></list> <!-- 16 -->
-    <list type="CARD32" name="data32"><value>5</value></list>  <!-- 32 -->
-  </union>
+  <enum name="DataFormat">
+    <item name="Data8"> <value>8</value></item>
+    <item name="Data16"><value>16</value></item>
+    <item name="Data32"><value>32</value></item>
+  </enum>
 
   <event name="ClientMessage" number="33">
-    <field type="CARD8" name="format" /> <!-- 8, 16, or 32. -->
+    <field type="CARD8" name="format" enum="DataFormat"/>
     <field type="WINDOW" name="window" />
     <field type="ATOM" name="type" />
-    <field type="ClientMessageData" name="data" />
+    <switch name="data">
+        <fieldref>format</fieldref>
+        <case name="data8">
+          <enumref ref="DataFormat">Data8</enumref>
+          <list type="CARD8" name="data" ><value>20</value></list>
+        </case>
+        <case name="data16">
+          <enumref ref="DataFormat">Data16</enumref>
+          <list type="CARD16" name="data"><value>10</value></list>
+        </case>
+        <case name="data32">
+          <enumref ref="DataFormat">Data32</enumref>
+          <list type="CARD32" name="data"><value>5</value></list>
+        </case>
+    </switch>
     <doc>
       <brief>NOT YET DOCUMENTED</brief>
       <description><![CDATA[
@@ -2168,18 +2180,30 @@ defined with the correct type and format with zero-length data.
     <field type="WINDOW" name="window" />
     <field type="ATOM" name="property" />
     <field type="ATOM" name="type" />
-    <field type="CARD8" name="format" />
+    <field type="CARD8" name="format" enum="DataFormat" />
     <pad bytes="3" />
     <field type="CARD32" name="data_len" />
-    <list type="void" name="data">
-      <op op="/">
-        <op op="*">
-          <fieldref>data_len</fieldref>
-          <fieldref>format</fieldref>
-        </op>
-        <value>8</value>
-      </op>
-    </list>
+    <switch name="data">
+        <fieldref>format</fieldref>
+        <case name="data8">
+          <enumref ref="DataFormat">Data8</enumref>
+          <list type="CARD8" name="data">
+            <fieldref>data_len</fieldref>
+          </list>
+        </case>
+        <case name="data16">
+          <enumref ref="DataFormat">Data16</enumref>
+          <list type="CARD16" name="data">
+            <fieldref>data_len</fieldref>
+          </list>
+        </case>
+        <case name="data32">
+          <enumref ref="DataFormat">Data32</enumref>
+          <list type="CARD32" name="data">
+            <fieldref>data_len</fieldref>
+          </list>
+        </case>
+    </switch>
     <doc>
       <brief>Changes a window property</brief>
       <description><![CDATA[
@@ -2265,20 +2289,32 @@ The X server could not store the property (no memory?).
     <field type="CARD32" name="long_offset" />
     <field type="CARD32" name="long_length" />
     <reply>
-      <field type="CARD8" name="format" />
+      <field type="CARD8" name="format" enum="DataFormat" />
       <field type="ATOM" name="type" />
       <field type="CARD32" name="bytes_after" />
       <field type="CARD32" name="value_len" />
       <pad bytes="12" />
-      <list type="void" name="value">
-        <op op="*">
-          <fieldref>value_len</fieldref>
-          <op op="/">
-            <fieldref>format</fieldref>
-            <value>8</value>
-          </op>
-        </op>
-      </list>
+      <switch name="value">
+          <fieldref>format</fieldref>
+          <case name="data8">
+            <enumref ref="DataFormat">Data8</enumref>
+            <list type="CARD8" name="data">
+              <fieldref>value_len</fieldref>
+            </list>
+          </case>
+          <case name="data16">
+            <enumref ref="DataFormat">Data16</enumref>
+            <list type="CARD16" name="data">
+              <fieldref>value_len</fieldref>
+            </list>
+          </case>
+          <case name="data32">
+            <enumref ref="DataFormat">Data32</enumref>
+            <list type="CARD32" name="data">
+              <fieldref>value_len</fieldref>
+            </list>
+          </case>
+      </switch>
       <doc>
       <field name="format"><![CDATA[
 Specifies whether the data should be viewed as a list of 8-bit, 16-bit, or

@@ -326,19 +326,31 @@ authorization from the authors.
 		<field type="OUTPUT" name="output" />
 		<field type="ATOM" name="property" />
 		<field type="ATOM" name="type" />
-		<field type="CARD8" name="format" />
+		<field type="CARD8" name="format" enum="DataFormat" />
 		<field type="CARD8" name="mode" enum="PropMode" />
 		<pad bytes="2" />
 		<field type="CARD32" name="num_units" />
-		<list type="void" name="data">
-		    <op op="/">
-			<op op="*">
-			    <fieldref>num_units</fieldref>
-			    <fieldref>format</fieldref>
-			</op>
-			<value>8</value>
-		    </op>
-		</list>
+		<switch name="data">
+			<fieldref>format</fieldref>
+			<case name="data8">
+				<enumref ref="DataFormat">Data8</enumref>
+				<list type="CARD8" name="data">
+					<fieldref>num_units</fieldref>
+				</list>
+			</case>
+			<case name="data16">
+				<enumref ref="DataFormat">Data16</enumref>
+				<list type="CARD16" name="data">
+					<fieldref>num_units</fieldref>
+				</list>
+			</case>
+			<case name="data32">
+				<enumref ref="DataFormat">Data32</enumref>
+				<list type="CARD32" name="data">
+					<fieldref>num_units</fieldref>
+				</list>
+			</case>
+		</switch>
 	</request>
 
 	<request name="DeleteOutputProperty" opcode="14">
@@ -357,21 +369,32 @@ authorization from the authors.
 		<field type="BOOL" name="pending" />
 		<pad bytes="2" />
 		<reply>
-			<field type="CARD8" name="format" />
+			<field type="CARD8" name="format" enum="DataFormat" />
 			<field type="ATOM" name="type" altenum="Atom" />
 			<field type="CARD32" name="bytes_after" />
 			<field type="CARD32" name="num_items" />
 			<pad bytes="12" />
-			<list type="BYTE" name="data">
-				<!-- n * format / 8 -->
-				<op op="*">
-					<fieldref>num_items</fieldref>
-					<op op="/">
-						<fieldref>format</fieldref>
-						<value>8</value>
-					</op>
-				</op>
-			</list>
+			<switch name="data">
+				<fieldref>format</fieldref>
+				<case name="data8">
+					<enumref ref="DataFormat">Data8</enumref>
+					<list type="CARD8" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+				<case name="data16">
+					<enumref ref="DataFormat">Data16</enumref>
+					<list type="CARD16" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+				<case name="data32">
+					<enumref ref="DataFormat">Data32</enumref>
+					<list type="CARD32" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+			</switch>
 		</reply>
 	</request>
 
@@ -727,19 +750,31 @@ authorization from the authors.
 		<field type="PROVIDER" name="provider" />
 		<field type="ATOM" name="property" />
 		<field type="ATOM" name="type" />
-		<field type="CARD8" name="format" />
+		<field type="CARD8" name="format" enum="DataFormat" />
 		<field type="CARD8" name="mode" />
 		<pad bytes="2" />
 		<field type="CARD32" name="num_items" />
-		<list type="void" name="data">
-			<op op="*">
-				<fieldref>num_items</fieldref>
-				<op op="/">
-					<fieldref>format</fieldref>
-					<value>8</value>
-				</op>
-			</op>
-		</list>
+		<switch name="data">
+			<fieldref>format</fieldref>
+			<case name="data8">
+				<enumref ref="DataFormat">Data8</enumref>
+				<list type="CARD8" name="data">
+					<fieldref>num_items</fieldref>
+				</list>
+			</case>
+			<case name="data16">
+				<enumref ref="DataFormat">Data16</enumref>
+				<list type="CARD16" name="data">
+					<fieldref>num_items</fieldref>
+				</list>
+			</case>
+			<case name="data32">
+				<enumref ref="DataFormat">Data32</enumref>
+				<list type="CARD32" name="data">
+					<fieldref>num_items</fieldref>
+				</list>
+			</case>
+		</switch>
 	</request>
 
 	<request name="DeleteProviderProperty" opcode="40">
@@ -757,20 +792,32 @@ authorization from the authors.
 		<field type="BOOL" name="pending" />
 		<pad bytes="2" />
 		<reply>
-			<field type="CARD8" name="format" />
+			<field type="CARD8" name="format" enum="DataFormat" />
 			<field type="ATOM" name="type" /> <!-- None -->
 			<field type="CARD32" name="bytes_after" />
 			<field type="CARD32" name="num_items" />
 			<pad bytes="12" />
-			<list type="void" name="data">
-				<op op="*">
-					<fieldref>num_items</fieldref>
-					<op op="/">
-						<fieldref>format</fieldref>
-						<value>8</value>
-					</op>
-				</op>
-			</list>
+			<switch name="data">
+				<fieldref>format</fieldref>
+				<case name="data8">
+					<enumref ref="DataFormat">Data8</enumref>
+					<list type="CARD8" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+				<case name="data16">
+					<enumref ref="DataFormat">Data16</enumref>
+					<list type="CARD16" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+				<case name="data32">
+					<enumref ref="DataFormat">Data32</enumref>
+					<list type="CARD32" name="data">
+						<fieldref>num_items</fieldref>
+					</list>
+				</case>
+			</switch>
 		</reply>
 	</request>
 
