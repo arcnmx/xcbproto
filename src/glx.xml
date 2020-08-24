@@ -628,6 +628,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
 		<field type="BOOL" name="lsb_first" />
+		<pad bytes="2" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="24" />
@@ -892,6 +893,7 @@ The patch that fixed this server bug in X.org CVS is here:
 	<request name="GetPolygonStipple" opcode="128">
 		<field type="CONTEXT_TAG" name="context_tag" />
 		<field type="BOOL" name="lsb_first" />
+		<pad bytes="3" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="24" />
@@ -1007,6 +1009,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="format" />
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
+		<pad bytes="3" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="8" />
@@ -1166,6 +1169,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="format" />
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
+		<pad bytes="3" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="8" />
@@ -1218,6 +1222,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="format" />
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
+		<pad bytes="3" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="8" />
@@ -1272,6 +1277,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="format" />
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
+		<pad bytes="3" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="8" />
@@ -1294,6 +1300,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
 		<field type="BOOL" name="reset" />
+		<pad bytes="2" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="8" />
@@ -1348,6 +1355,7 @@ The patch that fixed this server bug in X.org CVS is here:
 		<field type="CARD32" name="type" />
 		<field type="BOOL" name="swap_bytes" />
 		<field type="BOOL" name="reset" />
+		<pad bytes="2" />
 		<reply>
 			<pad bytes="1" />
 			<pad bytes="24" />

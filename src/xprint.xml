@@ -155,18 +155,22 @@ authorization from the authors.
 
     <request name="PrintStartJob" opcode="7">
         <field type="CARD8" name="output_mode"/>
+        <pad bytes="3" />
     </request>
 
     <request name="PrintEndJob" opcode="8">
         <field type="BOOL"  name="cancel" />
+        <pad bytes="3" />
     </request>
 
     <request name="PrintStartDoc" opcode="9">
         <field type="CARD8" name="driver_mode" />
+        <pad bytes="3" />
     </request>
 
     <request name="PrintEndDoc" opcode="10">
         <field type="BOOL" name="cancel" />
+        <pad bytes="3" />
     </request>
 
     <request name="PrintPutDocumentData" opcode="11">
@@ -294,6 +298,7 @@ authorization from the authors.
     <request name="PrintSetImageResolution" opcode="23">
         <field type="PCONTEXT" name="context" />
         <field type="CARD16" name="image_resolution" />
+        <pad bytes="2" />
         <reply>
             <field type="BOOL" name="status" />
             <field type="CARD16" name="previous_resolutions" />
@@ -314,6 +319,7 @@ authorization from the authors.
         <field type="CARD8" name="detail" />
         <field type="PCONTEXT" name="context" />
         <field type="BOOL" name="cancel" />
+        <pad bytes="3" />
     </event>
 
     <event name="AttributNotify" number="1">

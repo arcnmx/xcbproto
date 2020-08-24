@@ -230,6 +230,7 @@ for licensing information.
     <field type="DRAWABLE" name="drawable" />
     <field type="FENCE" name="fence" />
     <field type="BOOL" name="initially_triggered" />
+    <pad bytes="3" />
   </request>
 
   <request name="TriggerFence" opcode="15">
