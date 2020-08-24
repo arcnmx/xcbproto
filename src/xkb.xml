@@ -385,23 +385,7 @@ authorization from the authors.
 		<list name="string" type="char">
 			<fieldref>length</fieldref>
 		</list>
-		<list type="void" name="alignment_pad">
-			<op op="-">
-				<op op="&amp;">
-					<op op="+">
-						<fieldref>length</fieldref>
-						<value>5</value>
-					</op>
-					<unop op="~">
-						<value>3</value>
-					</unop>
-				</op>
-				<op op="+">
-					<fieldref>length</fieldref>
-					<value>2</value>
-				</op>
-			</op>
-		</list>
+		<pad align="4" />
 	</struct>
 
 	<struct name="KTMapEntry">

@@ -154,20 +154,7 @@ authorization from the authors.
 	    <list type="char" name="vendor">
 		<fieldref>vendor_length</fieldref>
 	    </list>
-	    <list type="void" name="alignment_pad">
-		<op op="-">
-		    <op op="&amp;">
-			<op op="+">
-			    <fieldref>vendor_length</fieldref>
-			    <value>3</value>
-			</op>
-			<unop op="~">
-			    <value>3</value>
-			</unop>
-		    </op>
-		    <fieldref>vendor_length</fieldref>
-		</op>
-	    </list>
+	    <pad align="4" />
 	    <list type="char" name="model">
 		<fieldref>model_length</fieldref>
 	    </list>
