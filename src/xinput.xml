@@ -45,7 +45,9 @@ authorization from the authors.
     <!-- ⋅⋅⋅ Types (v2.0) ⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅⋅ -->
 
     <typedef oldname="CARD16" newname="DeviceId" />
-    <typedef oldname="INT32"  newname="FP1616" />
+    <struct name="FP1616">
+        <field type="INT32"  name="fp1616" />
+    </struct>
 
     <struct name="FP3232">
         <field type="INT32"  name="integral" />
